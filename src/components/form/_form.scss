@@ -1,0 +1,24 @@
+.form {
+  width: 50rem;
+  max-width: 100rem;
+  margin: 0 auto;
+  padding: 5em 10em;
+  background-color: #ffffff;
+}
+
+label {
+  margin: 1em 0.25em;
+}
+
+input {
+  margin: 0.5em;
+  padding: 0.5em;
+  border-radius: 1rem;
+  border: none;
+  background-color: #f2f2f2;
+}
+
+.submit {
+  cursor: pointer;
+  border: 1px solid gray;
+}
