@@ -20,6 +20,7 @@ const Form = ({ setUserName, setRadioInput }) => {
     setRadioInput(radioSelect);
     setUserNameInput('');
     setFormValidation(false);
+    setEnteredNameChanged(false);
   };
 
   const userNameHandler = (e) => {
