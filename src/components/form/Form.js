@@ -1,23 +1,34 @@
 import React, { useState } from 'react';
 import './_form.scss';
 
-const Form = ({ setUserName, setRadioInput, setFormValidation }) => {
+const Form = ({ setUserName, setRadioInput }) => {
   const [userNameInput, setUserNameInput] = useState('');
   const [radioSelect, setRadioSelect] = useState('');
+  const [formValidation, setFormValidation] = useState(false);
+  const [enteredNameChanged, setEnteredNameChanged] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
+
+    setEnteredNameChanged(true);
+    if (userNameInput == '') {
+      setFormValidation(false);
+      return;
+    }
+    setFormValidation(true);
     setUserName(userNameInput);
     setRadioInput(radioSelect);
     setUserNameInput('');
+    setFormValidation(false);
   };
 
   const userNameHandler = (e) => {
-    if (e.target.value.trim() == '') {
-      setFormValidation(false);
-    }
     setUserNameInput(e.target.value.trim());
   };
+  const nameInputIsInvalid = !formValidation && enteredNameChanged;
+
+  const nameInputClass = nameInputIsInvalid ? 'invalid' : 'valid';
+
   return (
     <form className='form' onSubmit={submitHandler}>
       <label htmlFor='name-input'>Name:</label>
@@ -25,11 +36,12 @@ const Form = ({ setUserName, setRadioInput, setFormValidation }) => {
         name='name'
         value={userNameInput}
         id='name-input'
+        className={nameInputClass}
         type='text'
         onChange={userNameHandler}
         placeholder='Enter name'
       />
-
+      {nameInputIsInvalid && <p className='invalid-message'>User not found.</p>}
       <div>
         <label htmlFor='radio-user'>User:</label>
         <input

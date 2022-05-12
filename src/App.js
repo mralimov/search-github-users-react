@@ -11,7 +11,6 @@ const App = () => {
   const [isLoding, setIsLoading] = useState(false);
   const [userName, setUserName] = useState('');
   const [radioInput, setRadioInput] = useState('');
-  const [formValidation, setFormValidation] = useState(true);
 
   const { get } = useFetch(BASE_URL);
 
@@ -44,14 +43,9 @@ const App = () => {
   console.log(userData);
   return (
     <Fragment>
-      <Form
-        setUserName={setUserName}
-        setRadioInput={setRadioInput}
-        setFormValidation={setFormValidation}
-      />
-      ;{isLoding && <Loader />};
+      <Form setUserName={setUserName} setRadioInput={setRadioInput} />;
+      {isLoding && <Loader />};
       <UserInfo userData={userData} />
-      {!formValidation && <p>User not found</p>}
     </Fragment>
   );
 };
