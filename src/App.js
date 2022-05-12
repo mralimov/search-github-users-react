@@ -7,7 +7,7 @@ const BASE_URL = 'https://api.github.com/search/users';
 
 const App = () => {
   const [userData, setUserData] = useState([]);
-  const [isLoding, setIsLoading] = useState(true);
+  const [isLoding, setIsLoading] = useState(false);
   const [userName, setUserName] = useState('');
   const [radioInput, setRadioInput] = useState('');
 
@@ -16,10 +16,12 @@ const App = () => {
     (async () => {
       try {
         if (radioInput === 'org') {
+          setIsLoading(true);
           const response = await fetch(`${BASE_URL}?q=${userName}+type:org`);
           const data = await response.json();
           setUserData(data.items);
         } else {
+          setIsLoading(true);
           const response = await fetch(`${BASE_URL}?q=${userName}`);
           const data = await response.json();
           setUserData(data.items);
@@ -38,8 +40,8 @@ const App = () => {
   return (
     <Fragment>
       <Form setUserName={setUserName} setRadioInput={setRadioInput} />;
+      {isLoding && <Loader />};
       <UserInfo userData={userData} />
-      <Loader />;
     </Fragment>
   );
 };
