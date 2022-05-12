@@ -1,5 +1,4 @@
 import React from 'react';
-import UserCard from '../UI/UserCard';
 
 const UserInfo = ({ userData }) => {
   return (

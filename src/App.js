@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import Form from './components/form/Form';
 import './App.scss';
 import Loader from './components/loader/Loader';
+import UserInfo from './components/userInfo/UserInfo';
 const BASE_URL = 'https://api.github.com/search/users';
 
 const App = () => {
@@ -34,7 +35,12 @@ const App = () => {
   }, [radioInput, userName]);
 
   console.log(userData);
-  return <Form setUserName={setUserName} setRadioInput={setRadioInput} />;
+  return (
+    <Fragment>
+      <Form setUserName={setUserName} setRadioInput={setRadioInput} />;
+      <UserInfo userData={userData} />
+    </Fragment>
+  );
 };
 
 export default App;
