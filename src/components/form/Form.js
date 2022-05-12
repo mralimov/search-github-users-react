@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './_form.scss';
 
-const Form = ({ setUserName, setRadioInput }) => {
+const Form = ({ setUserName, setRadioInput, setFormValidation }) => {
   const [userNameInput, setUserNameInput] = useState('');
   const [radioSelect, setRadioSelect] = useState('');
 
@@ -12,6 +12,12 @@ const Form = ({ setUserName, setRadioInput }) => {
     setUserNameInput('');
   };
 
+  const userNameHandler = (e) => {
+    if (e.target.value.trim() == '') {
+      setFormValidation(false);
+    }
+    setUserNameInput(e.target.value.trim());
+  };
   return (
     <form className='form' onSubmit={submitHandler}>
       <label htmlFor='name-input'>Name:</label>
@@ -20,7 +26,7 @@ const Form = ({ setUserName, setRadioInput }) => {
         value={userNameInput}
         id='name-input'
         type='text'
-        onChange={(e) => setUserNameInput(e.target.value)}
+        onChange={userNameHandler}
         placeholder='Enter name'
       />
 
