@@ -1,4 +1,5 @@
 import React from 'react';
+import './_userInfo.scss';
 
 const UserInfo = ({ userData }) => {
   return (
@@ -8,13 +9,10 @@ const UserInfo = ({ userData }) => {
           const { name, avatar_url, id, login } = user;
           return (
             <div className='user-card' key={id}>
-              <div className='image-card'>
-                <img className='image' alt='user' src={avatar_url} />
-              </div>
+              <img className='user-image' alt='user' src={avatar_url} />
 
-              <div className='info-card'>
-                <div className='username'>{login}</div>
-                <div className='name'>{name}</div>
+              <div className='user-info'>
+                <h2 className='username'>{login}</h2>
               </div>
             </div>
           );

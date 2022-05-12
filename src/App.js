@@ -38,8 +38,8 @@ const App = () => {
   return (
     <Fragment>
       <Form setUserName={setUserName} setRadioInput={setRadioInput} />;
-      {isLoding && <Loader />}
       <UserInfo userData={userData} />
+      <Loader />;
     </Fragment>
   );
 };
