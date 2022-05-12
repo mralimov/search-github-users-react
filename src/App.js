@@ -4,12 +4,16 @@ import './App.scss';
 import Loader from './components/loader/Loader';
 import UserInfo from './components/userInfo/UserInfo';
 const BASE_URL = 'https://api.github.com/search/users';
+import useFetch from './components/useFetch/useFetch';
 
 const App = () => {
   const [userData, setUserData] = useState([]);
   const [isLoding, setIsLoading] = useState(false);
   const [userName, setUserName] = useState('');
   const [radioInput, setRadioInput] = useState('');
+  const [formValidation, setFormValidation] = useState(true);
+
+  const { get } = useFetch(BASE_URL);
 
   useEffect(() => {
     if (!userName) return;
@@ -17,16 +21,17 @@ const App = () => {
       try {
         if (radioInput === 'org') {
           setIsLoading(true);
-          const response = await fetch(`${BASE_URL}?q=${userName}+type:org`);
-          const data = await response.json();
-          setUserData(data.items);
+
+          get(`?q=${userName}+type:org`).then((data) => {
+            setUserData(data.items);
+          });
         } else {
           setIsLoading(true);
-          const response = await fetch(`${BASE_URL}?q=${userName}`);
-          const data = await response.json();
-          setUserData(data.items);
-        }
 
+          get(`?q=${userName}`).then((data) => {
+            setUserData(data.items);
+          });
+        }
         console.log(userName);
       } catch (error) {
         console.error(error);
@@ -39,9 +44,14 @@ const App = () => {
   console.log(userData);
   return (
     <Fragment>
-      <Form setUserName={setUserName} setRadioInput={setRadioInput} />;
-      {isLoding && <Loader />};
+      <Form
+        setUserName={setUserName}
+        setRadioInput={setRadioInput}
+        setFormValidation={setFormValidation}
+      />
+      ;{isLoding && <Loader />};
       <UserInfo userData={userData} />
+      {!formValidation && <p>User not found</p>}
     </Fragment>
   );
 };
