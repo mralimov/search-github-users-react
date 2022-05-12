@@ -6,13 +6,15 @@ const Form = ({ setUserName, setRadioInput }) => {
   const [radioSelect, setRadioSelect] = useState('');
   const [formValidation, setFormValidation] = useState(false);
   const [enteredNameChanged, setEnteredNameChanged] = useState(false);
+  const [radioButtonInvalid, setRadioButtonInvalid] = useState(false);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     setEnteredNameChanged(true);
-    if (userNameInput == '') {
+    if (userNameInput == '' || radioSelect == '') {
       setFormValidation(false);
+      setRadioButtonInvalid(true);
       return;
     }
     setFormValidation(true);
@@ -21,6 +23,7 @@ const Form = ({ setUserName, setRadioInput }) => {
     setUserNameInput('');
     setFormValidation(false);
     setEnteredNameChanged(false);
+    setRadioButtonInvalid(false);
   };
 
   const userNameHandler = (e) => {
@@ -65,6 +68,9 @@ const Form = ({ setUserName, setRadioInput }) => {
           checked={radioSelect === 'org'}
         ></input>
       </div>
+      {radioButtonInvalid && (
+        <p className='invalid-message'>Please selsect one of the input</p>
+      )}
 
       <input className='submit' type='submit' value='Submit' />
     </form>

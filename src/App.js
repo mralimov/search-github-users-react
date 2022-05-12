@@ -12,21 +12,17 @@ const App = () => {
   const [userName, setUserName] = useState('');
   const [radioInput, setRadioInput] = useState('');
 
-  const { get } = useFetch(BASE_URL);
+  const { get, loading } = useFetch(BASE_URL);
 
   useEffect(() => {
     if (!userName) return;
     (async () => {
       try {
         if (radioInput === 'org') {
-          setIsLoading(true);
-
           get(`?q=${userName}+type:org`).then((data) => {
             setUserData(data.items);
           });
         } else {
-          setIsLoading(true);
-
           get(`?q=${userName}`).then((data) => {
             setUserData(data.items);
           });
@@ -44,8 +40,8 @@ const App = () => {
   return (
     <Fragment>
       <Form setUserName={setUserName} setRadioInput={setRadioInput} />;
-      {isLoding && <Loader />};
-      <UserInfo userData={userData} />
+      {loading && <Loader />};
+      <UserInfo isLoding={isLoding} userData={userData} />
     </Fragment>
   );
 };
