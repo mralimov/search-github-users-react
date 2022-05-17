@@ -6,11 +6,13 @@ import UserInfo from './components/userInfo/UserInfo';
 import useFetch from './components/useFetch/useFetch';
 
 const App = () => {
+  const { loading } = useFetch();
   return (
-    <UserProvider>
-      <Form />;{/* {loading && <Loader />}; */}
+    <>
+      <Form />
+      {loading && <Loader />}
       <UserInfo />
-    </UserProvider>
+    </>
   );
 };
 
