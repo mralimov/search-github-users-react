@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import UserContext from '../state-context/UserContext';
 import './_userInfo.scss';
 
-const UserInfo = ({ userData }) => {
+const UserInfo = () => {
+  const { userData } = useContext(UserContext);
   return (
     <>
       {userData.map((user) => {
