@@ -46,6 +46,7 @@ const UserProvider = ({ children }) => {
     setUserSearchData(stateContext.formState);
 
     // console.log(formState);
+    setSearchInput({ userName: '', radioInput: '' });
   }
 
   const { userName, radioInput } = userSearchData;
