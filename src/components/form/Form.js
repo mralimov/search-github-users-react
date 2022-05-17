@@ -1,77 +1,65 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import './_form.scss';
+import UserContext from '../state-context/UserContext';
 
-const Form = ({ setUserName, setRadioInput }) => {
-  const [userNameInput, setUserNameInput] = useState('');
-  const [radioSelect, setRadioSelect] = useState('');
-  const [formValidation, setFormValidation] = useState(false);
-  const [enteredNameChanged, setEnteredNameChanged] = useState(false);
-  const [radioButtonInvalid, setRadioButtonInvalid] = useState(false);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    setEnteredNameChanged(true);
-    if (userNameInput == '' || radioSelect == '') {
-      setFormValidation(false);
-      setRadioButtonInvalid(true);
-      return;
-    }
-    setFormValidation(true);
-    setUserName(userNameInput);
-    setRadioInput(radioSelect);
-    setUserNameInput('');
-    setFormValidation(false);
-    setEnteredNameChanged(false);
-    setRadioButtonInvalid(false);
-  };
-
-  const userNameHandler = (e) => {
-    setUserNameInput(e.target.value.trim());
-  };
-  const nameInputIsInvalid = !formValidation && enteredNameChanged;
-
-  const nameInputClass = nameInputIsInvalid ? 'invalid' : 'valid';
+const Form = () => {
+  const {
+    formState,
+    handleInputChange,
+    handleSubmitForm,
+    invalidInput,
+    userNotFound,
+  } = useContext(UserContext);
 
   return (
-    <form className='form' onSubmit={submitHandler}>
+    <form className='form' onSubmit={handleSubmitForm}>
       <label htmlFor='name-input'>Name:</label>
       <input
-        name='name'
-        value={userNameInput}
+        name='userName'
+        value={formState.userName}
         id='name-input'
-        className={nameInputClass}
+        className='valid'
         type='text'
-        onChange={userNameHandler}
+        onChange={handleInputChange}
         placeholder='Enter name'
       />
-      {nameInputIsInvalid && <p className='invalid-message'>User not found.</p>}
+      {invalidInput.userName && (
+        <p className='invalid-message'>{invalidInput.userName}</p>
+      )}
+
       <div>
         <label htmlFor='radio-user'>User:</label>
         <input
           className='radio-button'
           type='radio'
-          name='users'
+          name='radioInput'
           value='users'
           id='radio-user'
-          onChange={(e) => setRadioSelect(e.target.value)}
-          checked={radioSelect === 'users'}
+          onChange={handleInputChange}
+          checked={formState.radioInput === 'users'}
         ></input>
         <label htmlFor='radio-organization'>Organization:</label>
         <input
           className='radio-button'
           type='radio'
-          name='org'
+          name='radioInput'
           value='org'
           id='radio-org'
-          onChange={(e) => setRadioSelect(e.target.value)}
-          checked={radioSelect === 'org'}
+          onChange={handleInputChange}
+          checked={formState.radioInput === 'org'}
         ></input>
       </div>
-      {radioButtonInvalid && (
-        <p className='invalid-message'>Please selsect one of the input</p>
+      {invalidInput.radioInput && (
+        <p className='invalid-message'>{invalidInput.radioInput}</p>
       )}
-
+      {userNotFound ? (
+        <p className='invalid-message'>
+          User not found! Please check spelling of the username or select the
+          correct button.
+        </p>
+      ) : (
+        ''
+      )}
       <input className='submit' type='submit' value='Submit' />
     </form>
   );
