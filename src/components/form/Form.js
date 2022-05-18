@@ -18,7 +18,7 @@ const Form = () => {
         name='userName'
         value={formState.userName}
         id='name-input'
-        className='valid'
+        className='userName-input'
         type='text'
         onChange={handleInputChange}
         placeholder='Enter name'
@@ -27,7 +27,7 @@ const Form = () => {
         <p className='invalid-message'>{invalidInput.userName}</p>
       )}
 
-      <div>
+      <div className='radio-input__card'>
         <label htmlFor='radio-user'>User:</label>
         <input
           className='radio-button'
