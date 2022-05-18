@@ -26,7 +26,7 @@ const UserProvider = ({ children }) => {
     invalidInput: wrongInput,
     userNotFound: userNotFound,
     isLoading: isLoading,
-    loading: loading,
+    // loading: loading,
   };
 
   function handleInputChange(e) {
@@ -55,9 +55,23 @@ const UserProvider = ({ children }) => {
     if (!userName) return;
 
     (async () => {
+      setIsLoading(true);
+
       try {
         if (radioInput === 'org') {
           get(`?q=${userName}+type:org`).then((data) => {
+            setIsLoading(false);
+            setFetchedData(data.items);
+            setUserNotFound(false);
+
+            if (!data.items.length) {
+              setUserNotFound(true);
+            }
+          });
+        } else if (radioInput === 'users') {
+          get(`?q=${userName}`).then((data) => {
+            console.log(data.items);
+            setIsLoading(false);
             setFetchedData(data.items);
 
             setUserNotFound(false);
@@ -67,19 +81,11 @@ const UserProvider = ({ children }) => {
             }
           });
         } else {
-          get(`?q=${userName}`).then((data) => {
-            console.log(data.items);
-            setFetchedData(data.items);
-
-            setUserNotFound(false);
-
-            if (!data.items.length) {
-              setUserNotFound(true);
-            }
-          });
+          return;
         }
       } catch (error) {
         console.error(error);
+        // setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
