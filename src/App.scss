@@ -1,17 +1,41 @@
-* {
-  margin: 0;
-  padding: 0;
-}
+// font-family: 'Montserrat', sans-serif;
+// font-family: 'Space Mono', monospace;
 
 *,
 *::before,
 *::after {
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
   box-sizing: border-box;
-  font-size: 62.5%;
+  font-size: 62.5%; //1rem = 10px
+}
+body {
+  background-color: #010409;
+  color: white;
+  font-family: 'Space Mono', monospace;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  font-size: 1.2rem;
+  font-family: 'Space Mono', monospace;
+  flex-grow: 1;
+}
+input:focus {
+  outline: none;
+}
+
+input,
+textarea {
+  color: white;
+}
+
+.result {
+  max-width: 80rem;
+  margin: 0 auto;
 }
 
 .invalid {
@@ -22,6 +46,100 @@ html {
 .invalid-message {
   color: red;
 }
+
+.form {
+  background-color: #0d1117;
+  display: block;
+  margin: 2rem auto;
+}
+
+.userName-input {
+  box-shadow: inset 1px 2px 8px rgba(243, 230, 230, 0.07);
+}
+
+.radio-input__card {
+  display: flex;
+}
+
+.submit {
+  background-color: #2783fa;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  border: none;
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+.submit:hover {
+  cursor: pointer;
+  opacity: 0.9;
+}
+
+.card {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  background-color: #0d1117;
+  padding: 2em;
+  margin: 2em;
+}
+.user-img {
+  width: 19rem;
+  border-radius: 50%;
+  margin-right: 3.5rem;
+}
+
+.user-info,
+.blog {
+  color: #fff;
+}
+.name {
+  font-size: 3.5rem;
+  font-family: 'Space Mono', monospace;
+  margin: 0;
+}
+.bio {
+  font-family: 'Montserrat', sans-serif;
+}
+.login {
+  font-family: 'Montserrat', sans-serif;
+  color: rgb(39, 131, 250);
+}
+.info {
+  padding: 2rem 0;
+}
+.followers {
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  font-family: 'Space Mono', monospace;
+  background-color: #121923;
+  border-radius: 1rem;
+  margin-bottom: 3rem;
+}
+
+.followers li {
+  padding-right: 1rem;
+}
+.user-links {
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  column-gap: 3.5rem;
+  row-gap: 1.8rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-family: 'Montserrat', sans-serif;
+}
+.user-links li {
+  display: flex;
+  align-items: center;
+}
+.user-links li svg {
+  margin-right: 1rem;
+}
+
+// LOADING STYLING
 .spinner {
   animation: rotator 1.4s linear infinite;
 }
