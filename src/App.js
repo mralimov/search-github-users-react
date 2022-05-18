@@ -1,48 +1,26 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useContext } from 'react';
 import Form from './components/form/Form';
 import './App.scss';
 import Loader from './components/loader/Loader';
 import UserInfo from './components/userInfo/UserInfo';
-const BASE_URL = 'https://api.github.com/search/users';
 import useFetch from './components/useFetch/useFetch';
+import UserCard from './components/UI/UserCard';
+import UserContext from './components/state-context/UserContext';
 
 const App = () => {
-  const [userData, setUserData] = useState([]);
-  const [isLoding, setIsLoading] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [radioInput, setRadioInput] = useState('');
+  const { loading } = useFetch();
+  const { isLoading } = useContext(UserContext);
 
-  const { get, loading } = useFetch(BASE_URL);
-
-  useEffect(() => {
-    if (!userName) return;
-    (async () => {
-      try {
-        if (radioInput === 'org') {
-          get(`?q=${userName}+type:org`).then((data) => {
-            setUserData(data.items);
-          });
-        } else {
-          get(`?q=${userName}`).then((data) => {
-            setUserData(data.items);
-          });
-        }
-        console.log(userName);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    })();
-  }, [radioInput, userName]);
-
-  console.log(userData);
+  console.log(isLoading);
   return (
-    <Fragment>
-      <Form setUserName={setUserName} setRadioInput={setRadioInput} />;
-      {loading && <Loader />};
-      <UserInfo isLoding={isLoding} userData={userData} />
-    </Fragment>
+    <>
+      <Form />
+      {isLoading && <Loader />}
+      <div className='result'>
+        <UserCard />
+      </div>
+      {/* <UserInfo /> */}
+    </>
   );
 };
 
